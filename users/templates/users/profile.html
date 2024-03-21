@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile page</title>
+    </head>
+    <body>
+        <h1>Profile page</h1>
+        {% csrf_token %}
+    
+        <h3>Username:<h5>{{user.username}}</h5></h3>
+        <h3>First_name:<h5>{{user.first_name}}</h5></h3>
+        <h3>Last_name:<h5>{{user.last_name}}</h5></h3>
+        <h3>Email:<h5>{{user.email}}</h5></h3>
+       
+        
+        
+        
+    </body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Places page</title>
+    </head>
+    <body>
+        <h1>Places page</h1>
+        {% csrf_token %}
+        <br>
+        {% for place in places %}
+            <h5>{{place.name}},  {{place.address}}</h5> 
+
+            <a href="{% url 'places:about_page' place.id %}">Detail</a>
+        {% endfor %}
+    </body>
+</html>

@@ -1,8 +1,27 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, ProfileForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
+
+class ProfileView(View):
+    
+        
+        form_class=ProfileForm
+        model=User
+        template_name='users/profile.html'
+        
+        def get(self, request):
+            users=User.objects.all()
+            data={
+            'users':users
+                 }
+            return render (request, 'users/profile.html', context=data)
+        
+
+      
 
 # Create your views here.
 class RegisterView(View):
@@ -43,4 +62,10 @@ class LoginView(View):
                 return redirect('landing')
             
         return render(request, 'users/login_page.html' ,context={'form':form})
-       
+    
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+
+        logout(request)
+
+        return redirect( 'landing')
