@@ -6,21 +6,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 
-class ProfileView(View):
-    
-        
-        form_class=ProfileForm
-        model=User
-        template_name='users/profile.html'
-        
-        def get(self, request):
-            users=User.objects.all()
-            data={
-            'users':users
-                 }
-            return render (request, 'users/profile.html', context=data)
-        
 
+class ProfileView(View):
+    form_class = ProfileForm
+    template_name = 'users/profile.html'
+
+    def get(self, request):
+        form = self.form_class(instance=request.user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('landing')  # Redirect to landing page upon successful form submission
+        return render(request, self.template_name, {'form': form})
       
 
 # Create your views here.

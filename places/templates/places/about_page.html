@@ -9,7 +9,7 @@
         <h3>{{detail.name}}    </h3><br>
         <h4>{{detail.address}} - manzil <p>{{detail.description}}</p></h4>
         {% for com in comments %}
-                <p>foydalunchi:  {{com.user}}  tomonidan: {{com.star_given}} baho qoyildi <br>
+                <p>foydalunchi {{com.user}}  tomonidan {{com.star_given}} baho qoyildi <br>
                     izoh: {{com.comment_text}} </p>
         {% endfor %}
     </body>
