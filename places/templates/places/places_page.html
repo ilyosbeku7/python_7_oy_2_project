@@ -1,16 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Places page</title>
-    </head>
-    <body>
-        <h1>Places page</h1>
-        {% csrf_token %}
-        <br>
-        {% for place in places %}
-            <h5>{{place.name}},  {{place.address}}</h5> 
+{% extends "base.html"%}
+{% block title %}
+    PLace list
+{% endblock %}
 
-            <a href="{% url 'places:about_page' place.id %}">Detail</a>
-        {% endfor %}
-    </body>
-</html>
+{% block content %}
+{% csrf_token %}
+{% for place in places %}
+<div class="row">
+    <div class="col-sm-6 mb-3 mb-sm-0">
+        
+        <div class="card" style=" display: flex; text-align: center;">
+            <img style="width: 35%; display: flex;" src="https://freesoft.ru/storage/images/news/1/6/555/555_text.png" class="rounded mx-auto d-block" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{place.name}}</h5>
+            <p class="card-text">{{place.address}}</p>
+            <a href="{% url 'places:about_page' place.id %}" class="btn btn-primary">About</a>
+           
+            </div>
+            
+        </div>
+    </div>
+</div>
+<br>
+  {% endfor %} 
+      
+{% endblock %}

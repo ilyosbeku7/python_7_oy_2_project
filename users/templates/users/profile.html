@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Profile</title>
-</head>
-<body>
-    <h1>User Profile</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }} <!-- Renders the form fields as paragraphs -->
-        <button type="submit">Save</button>
-    </form>
-</body>
-</html>
+{% extends "base.html"%}
+
+
+{% block content %}
+<div class="card text-center w-50 mb-3" style="display: flex; justify-content: center; align-items: center; background-color: rgb(156, 86, 86); ">
+    <div class="card-body">
+      <div style="  width: auto; text-align: center;" >
+        <img style="width: 10%;" src="https://freesoft.ru/storage/images/news/1/6/555/555_text.png" class="rounded mx-auto d-block" alt="...">
+
+        <form action="", method="post">
+         {% csrf_token %}
+ 
+         {{form.as_p}}
+ 
+         <button type="submit" class="btn btn-light">Save</button>
+         
+        </form>
+      </div>
+    </div>
+</div>
+   
+{% endblock %}

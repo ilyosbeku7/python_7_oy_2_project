@@ -4,23 +4,25 @@ from .forms import RegisterForm, LoginForm, ProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
     form_class = ProfileForm
-    template_name = 'users/profile.html'
+    
 
     def get(self, request):
         form = self.form_class(instance=request.user)
-        return render(request, self.template_name, {'form': form})
+        return render(request, 'users/profile.html', {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('landing')  # Redirect to landing page upon successful form submission
-        return render(request, self.template_name, {'form': form})
+            messages.info(request,'Profile update qilindi')
+            return redirect('places:places_page')  
+        return render(request, 'users/profile.html', {'form': form})
       
 
 # Create your views here.
@@ -59,6 +61,7 @@ class LoginView(View):
         
             if user is not None:
                 login(request, user)
+                messages.success(request,'Tizimga muvafaqiyatli kirdingiz')
                 return redirect('landing')
             
         return render(request, 'users/login_page.html' ,context={'form':form})
@@ -67,5 +70,5 @@ class LogoutView(LoginRequiredMixin, View):
     def get(self, request):
 
         logout(request)
-
+        messages.success(request,'Tizimdan muvafaqiyatli chiqish qildingiz ')
         return redirect( 'landing')

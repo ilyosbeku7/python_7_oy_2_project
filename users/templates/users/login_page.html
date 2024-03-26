@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Login page</title>
-    </head>
-    <body>
-        <h1>Login page</h1>
+{% extends "base.html"%}
 
-       <form action="", method="post">
-        {% csrf_token %}
 
-        {{form.as_p}}
+{% block content %}
+<div class="card text-center w-50 mb-3 " style="display: flex; justify-content: center; align-items: center; background-color: rgb(156, 86, 86); ">
+    <div class="card-body">
+      <div style="  width: auto; text-align: center;" >
+        <h3>Login page</h3>
 
-        <button type="submit">Log In</button>
-       </form>
-    </body>
-</html>
+        <form action="", method="post">
+         {% csrf_token %}
+ 
+         {{form.as_p}}
+ 
+         <button type="submit" class="btn btn-light">Log In</button>
+         <br>
+         <a style="margin-top: 10px;" class="btn btn-light" href="{% url 'users:register_page'%}">
+            Register now
+            
+          </a>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

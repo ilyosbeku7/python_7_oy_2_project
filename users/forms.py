@@ -4,7 +4,7 @@ from django import forms
 
 class ProfileForm(forms.ModelForm):
    
-    first_name=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
+    first_name=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control "}))
     last_name=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
     username=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
     phone_number=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
@@ -15,8 +15,8 @@ class ProfileForm(forms.ModelForm):
         fields=('first_name', 'last_name', 'username',  'email', 'phone_number' )
         
 class LoginForm(forms.Form):
-    username=forms.CharField(required=True, widget=forms.TextInput())
-    password=forms.CharField(required=True, widget=forms.PasswordInput())
+    username=forms.CharField(required=True, widget=forms.TextInput(attrs={"class":"form-control  "}))
+    password=forms.CharField(required=True, widget=forms.PasswordInput(attrs={"class":"form-control "}))
 
     def clean_username(self):
         username=self.cleaned_data['username']
@@ -27,6 +27,13 @@ class LoginForm(forms.Form):
         return username
         
 class RegisterForm(forms.ModelForm):
+    first_name=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control "}))
+    last_name=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
+    username=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
+    phone_number=forms.CharField( widget=forms.TextInput(attrs={"class":"form-control"}))
+    email=forms.EmailField( widget=forms.EmailInput(attrs={"class":"form-control"}))
+    password=forms.CharField( widget=forms.PasswordInput(attrs={"class":"form-control"}))
+    confirm_password=forms.CharField( widget=forms.PasswordInput(attrs={"class":"form-control"}))
     
     def __init__(self, *args, **kwargs):
 
@@ -35,7 +42,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model=User
-        fields=('username', 'first_name', 'last_name', 'email', 'password')
+        fields=('username', 'first_name', 'last_name', 'email', 'password', 'phone_number', 'password', 'confirm_password')
 
     def clean_confirm_password(self):
         password=self.cleaned_data.get('password')
