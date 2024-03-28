@@ -3,18 +3,18 @@ from django.views import View
 from .forms import RegisterForm, LoginForm, ProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.views.generic import UpdateView
 
 
 
-class ProfileView(LoginRequiredMixin, View):
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
     
 
     def get(self, request):
         form = self.form_class(instance=request.user)
-        return render(request, 'users/profile.html', {'form': form})
+        return render(request, 'users/profile_update.html', {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST, instance=request.user)
@@ -22,7 +22,12 @@ class ProfileView(LoginRequiredMixin, View):
             form.save()
             messages.info(request,'Profile update qilindi')
             return redirect('places:places_page')  
-        return render(request, 'users/profile.html', {'form': form})
+        return render(request, 'users/profile_update.html', {'form': form})
+
+class ProfileView( LoginRequiredMixin, View):
+    
+    def get(self, request):
+        return render(request, 'users/profile.html')
       
 
 # Create your views here.
@@ -39,7 +44,7 @@ class RegisterView(View):
             user=form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            return redirect('landing')
+            return redirect('base')
         
         return render (request, 'users/register_page.html', context={'form':form})
 

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'places',
+    
 ]
 
 MIDDLEWARE = [
@@ -113,11 +114,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL='users.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL='/media/'
+MEDIA_ROOT='media'
 
 LOGIN_URL='users:login_page '
 

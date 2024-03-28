@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+
+{% block content %}
+<div class="card text-center w-50 mb-3" style="margin-left: 25%; display: flex; justify-content: center; align-items: center; 
+background-color: rgb(156, 86, 86); ">
+    <div class="card-body">
+      <div style="  width: 500px; text-align: center;" >
+        <img style="width: 20%;" src="{{user.photo.url}}" class="rounded mx-auto d-block" alt="..."  >
+
+        <form action="", method="post"  enctype="multipart/form-data">
+         {% csrf_token %}
+ 
+         {{form.as_p}}
+ 
+         <button type="submit" class="btn btn-light">Save</button>
+         
+        </form>
+      </div>
+    </div>
+</div>
+   
+{% endblock %}

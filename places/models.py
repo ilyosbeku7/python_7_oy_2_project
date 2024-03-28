@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
@@ -8,7 +8,7 @@ class Place(models.Model):
     name=models.CharField(max_length=100)
     description=models.TextField()
     address=models.CharField(max_length=100)
-
+    image=models.ImageField(upload_to='places_images/', default='places/default1.jpg')
     def __str__(self) -> str:
         return self.name
     
