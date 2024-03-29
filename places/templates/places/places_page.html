@@ -6,21 +6,17 @@
 {% block content %}
 {% csrf_token %}
 {% for place in places %}
-<div class="row">
-    <div class="col-sm-6 mb-3 mb-sm-0">
-        
-        <div class="card" style=" display: flex; text-align: center;">
-            <img style="width: 35%; display: flex;" src="https://freesoft.ru/storage/images/news/1/6/555/555_text.png" class="rounded mx-auto d-block" alt="...">
-            <div class="card-body">
-            <h5 class="card-title">{{place.name}}</h5>
-            <p class="card-text">{{place.address}}</p>
+<div class="container px-4 text-center">
+    <div class="row gx-5">
+      <div class="col">
+        <img style="width: 35%; display: flex;" src="{{place.image.url}}" class="rounded mx-auto d-block" alt="...">
+       <div class="p-3"><h2>{{place.name}}</h2></div>
+       <p class=" fst-italic">{{place.description}}</p>
             <a href="{% url 'places:about_page' place.id %}" class="btn btn-primary">About</a>
-           
-            </div>
-            
-        </div>
+      </div>
+      
     </div>
-</div>
+  </div>
 <br>
   {% endfor %} 
       
