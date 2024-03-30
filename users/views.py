@@ -17,7 +17,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return render(request, 'users/profile_update.html', {'form': form})
 
     def post(self, request):
-        form = self.form_class(request.POST, instance=request.user)
+        form = self.form_class(request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.info(request,'Profile update qilindi')
@@ -44,7 +44,7 @@ class RegisterView(View):
             user=form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            return redirect('base')
+            return redirect('landing')
         
         return render (request, 'users/register_page.html', context={'form':form})
 

@@ -4,6 +4,16 @@
 {% endblock %}
 
 {% block content %}
+
+<div class="row mt-4 mb-3">
+  <div class="col-4">
+    <form action="" method="get" class="d-flex">
+      <input type="text" class="form-control me-2" placeholder="Search" name="q" value="{{search_query}}">
+      <button class="btn btn-primary">Search</button>
+    </form>
+
+  </div>
+</div>
 {% csrf_token %}
 {% for place in places %}
 <div class="container px-4 text-center">
