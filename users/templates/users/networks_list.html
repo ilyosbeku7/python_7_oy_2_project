@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+
+
+{% block content %}
+
+{% for network in networks %}
+<div class="card mt-5" style="max-width: 800px; margin-left: 20%; ">
+    <div class="row g-0">
+      <div class="col-4">
+        <img style="width: 50%; border-radius: 50%;" src="{{network.from_user.photo.url}}" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{network.from_user.name}}</h5>
+          <p class="card-text"><b> {{network.from_user.username}}</b></p>
+          <p class="card-text"><small class="text-body-secondary">{{network.from_user.email}}</small></p>
+          <div class=" col">
+            <a href="{% url 'users:accept_friends' network.id %}"  class="btn btn-primary">Send request</a>
+            <button class="btn btn-secondary">Ignore</button>
+        </div>
+        </div>
+
+        
+      </div>
+     
+    </div>
+  </div>
+  {% endfor %}
+
+  
+{% endblock %}

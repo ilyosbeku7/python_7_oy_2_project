@@ -1,3 +1,4 @@
+from typing import Any
 from users.models import User
 from django import forms
 
@@ -61,5 +62,22 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError('username uzunligi 5 dan kichik va 30 dan katta bolmasligi lozim')
         
         return username
+    
+class ResetPasswordForm(forms.Form):
+
+    old_password=forms.CharField(widget=forms.PasswordInput)
+    new_password=forms.CharField(widget=forms.PasswordInput)
+    confirm_password=forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self) :
+        new_password=self.cleaned_data['new_password']
+        confirm_password=self.cleaned_data['confirm_password']
+        
+        if new_password != confirm_password:
+            raise forms.ValidationError('Bir xil password kiritin')
+        
+        return self.cleaned_data
+
+       
         
 
