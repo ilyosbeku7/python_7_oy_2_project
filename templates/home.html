@@ -7,7 +7,7 @@
   <div class="row justify-content-center"> <!-- Centering the content horizontally -->
     <div class="col-lg-6">
         {% for review in place_reviews %}
-         {% if izoh.user in user.friends.all %}  
+        {% if review.user in user.friends.all %}
           <div class="card mb-4" style="border: 1px solid rgba(24,28,33,0.06);">
         <div class="card-body">
           <div class="media mb-3">
@@ -36,8 +36,9 @@
           </a>
         </div>
       </div>
-      {% endif %}
+         {% endif %}
         {% endfor %}
+        
 
 
     </div>
