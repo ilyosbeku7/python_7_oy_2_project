@@ -105,52 +105,61 @@ def check_parol(user, password):
 
 class UsersView(LoginRequiredMixin, View):
     def get(self, request):
-        users=User.objects.exclude(username=request.user.username)
-        friends_request=User.objects.filter(id__in=FriendsRequest.objects.filter(from_user=request.user).values_list('to_user'))
-        return render(request, 'users/users.html', {"users":users, 'friends_request':friends_request})
-    
+        users = User.objects.exclude(username=request.user.username).exclude(friends=request.user)
+
+        friend_requests = User.objects.filter(id__in=FriendsRequest.objects.filter(from_user=request.user).values_list('to_user'))
+
+
+
+        return render(request, 'users/users.html', {"users": users, "friend_requests": friend_requests})
+
+
+class MyNetworksView(LoginRequiredMixin, View):
+    def get(self, request):
+        networks = FriendsRequest.objects.filter(to_user=request.user, is_accepted=False)
+
+        return render(request, 'users/networks_list.html', {"networks": networks})
+
+
 class AcceptFriendRequestView(LoginRequiredMixin, View):
     def get(self, request, id):
-         friends_request=FriendsRequest.objects.get(id=id)
-         from_user=friends_request.from_user
-         main_user=request.user
+        friend_request = FriendsRequest.objects.get(id=id)
+        from_user = friend_request.from_user
+        main_user = request.user
 
-         main_user.friends.add(from_user)
-         from_user.friends.add(main_user)
+        main_user.friends.add(from_user)
+        from_user.friends.add(main_user)
 
-         friends_request.is_accepted=True
-         friends_request.save()
-         return redirect("users:networks")
+        friend_request.is_accepted = True
+        friend_request.save()
+
+        return redirect("users:networks")
 
 
-class MyNetworks(LoginRequiredMixin, View):
-    def get(self, request):
-        
-        networks=FriendsRequest.objects.filter(to_user=request.user)
-        return render(request, 'users/networks_list.html', {"networks":networks, })
+class IgnoreFriendRequestView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        friend_request = FriendsRequest.objects.get(id=id)
+        friend_request.delete()
+        return redirect("users:networks")
 
-    
+
+class DeleteFromFriendsView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        friend = User.objects.get(id=id)
+        user = request.user
+        user.friends.remove(friend)
+        friend.friends.remove(user)
+
+        return redirect("users:networks")
+
+
 class SendFriendRequestView(LoginRequiredMixin, View):
     def get(self, request, id):
-        to_user=User.objects.get(id=id)
-        from_user=request.user
+        to_user = User.objects.get(id=id)
+        from_user = request.user
 
         FriendsRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
 
-        return redirect('users:users')
-    
-class IgnoreFriendRequsestView(LoginRequiredMixin, View):
+        return redirect("users:users")
 
-    def get(self, request, id):
-        friends_request=FriendsRequest.objects.get(id=id)
-        friends_request.delete()
-        return redirect('users:networks')
-    
-class DeleteFriendRequsestView(LoginRequiredMixin, View):
 
-    def get(self, request, id):
-        friend=User.objects.get(id=id)
-        user=request.user
-
-        user.friends.remove(friend)
-        return redirect('users:networks')

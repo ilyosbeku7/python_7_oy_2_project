@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, LoginView, LogoutView, IgnoreFriendRequsestView, DeleteFriendRequsestView, ProfileView, ProfileUpdateView, AcceptFriendRequestView, MyNetworks, ResetPasswordView, UsersView, SendFriendRequestView
+from .views import RegisterView, LoginView, LogoutView, IgnoreFriendRequestView, DeleteFromFriendsView, ProfileView, ProfileUpdateView, AcceptFriendRequestView, MyNetworksView, ResetPasswordView, UsersView, SendFriendRequestView
 
 app_name='users'
 
@@ -15,8 +15,8 @@ urlpatterns = [
 
 
     path('send_request/<int:id>/', SendFriendRequestView.as_view(), name='send_request'), 
-    path('networks/', MyNetworks.as_view(), name='networks'), 
+    path('networks/', MyNetworksView.as_view(), name='networks'), 
     path('accept_friends/<int:id>', AcceptFriendRequestView.as_view(), name='accept_friends'), 
-    path('ignore-friend/<int:id>', IgnoreFriendRequsestView.as_view(), name='ignore_friends'), 
-    path('delete-friend/<int:id>', DeleteFriendRequsestView.as_view(), name='delete_friends'), 
+    path('ignore-friend/<int:id>', IgnoreFriendRequestView.as_view(), name='ignore_friends'), 
+    path('delete-friend/<int:id>', DeleteFromFriendsView.as_view(), name='delete_friends'), 
 ]

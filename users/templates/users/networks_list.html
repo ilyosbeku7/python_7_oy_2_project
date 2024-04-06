@@ -1,59 +1,54 @@
 {% extends "base.html"%}
 
-
 {% block content %}
-<h1> My networks</h1>
-{% for friend in networks %}
-  {% if friend not in friend_requests %}
-<div class="card mt-5" style="max-width: 800px; margin-left: 20%; ">
-    <div class="row g-0">
-      <div class="col-4">
-        <img style="width: 50%; border-radius: 50%;" src="{{network.from_user.photo.url}}" class="img-fluid rounded-start" alt="...">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{friend.from_user.name}}</h5>
-          <p class="card-text"><b> {{friend.from_user.username}}</b></p>
-          <p class="card-text"><small class="text-body-secondary">{{friend.from_user.email}}</small></p>
-          <div class=" col">
-            <a href="{% url 'users:accept_friends' friend.id %}"  class="btn btn-primary"> Accept</a>
-            <a href="{% url 'users:ignore_friend' friend.id %}"  class="btn btn-primary"> Ignore</a>
-        </div>
+	<h1>My Networks Page</h1>
+    <hr>
+
+    {% for network in networks %}
+            <div class="row">
+
+            <div class="col-1">
+                <img src="{{ network.from_user.photo.url }}" alt="user photos" height="100px" width="100px" style="border-radius: 50%; margin-bottom: 10px;">
+            </div>
+
+            <div class="col-6">
+                <p><b>{{ network.from_user.username }}</b></p>
+                <p>{{ network.from_user.email }}</p>
+            </div>
+            <div class="col">
+                <a href="{% url 'users:ignore_friends' network.id %}" class="btn btn-outline-secondary">Ignore</a>
+                <a href="{% url 'users:accept_friends' network.id %}" class="btn btn-outline-primary">Accept</a>
+            </div>
         </div>
 
-        
-      </div>
-     
-    </div>
-  </div>
-  {% endif %}
-  {% endfor %}
+    {% endfor %}
 
-  <h1> My friends</h1>
-  {% for friend in user.friends.all %}
-   
 
-  <div class="card mt-5" style="max-width: 800px; margin-left: 20%; ">
-      <div class="row g-0">
-        <div class="col-4">
-          <img style="width: 50%; border-radius: 50%;" src="{{friend.photo.url}}" class="img-fluid rounded-start" alt="...">
+
+
+    	<h1>My Friends</h1>
+    <hr>
+
+    {% for friend in user.friends.all %}
+            <div class="row">
+
+            <div class="col-1">
+                <img src="{{ friend.photo.url }}" alt="user photos" height="100px" width="100px" style="border-radius: 50%; margin-bottom: 10px;">
+            </div>
+
+            <div class="col-6">
+                <p><b>{{ friend.username }}</b></p>
+                <p>{{ friend.email }}</p>
+            </div>
+            <div class="col">
+                <a href="{% url 'users:delete_friends' friend.id %}" class="btn btn-outline-danger">Delete</a>
+
+            </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{friend.name}}</h5>
-            <p class="card-text"><b> {{friend.username}}</b></p>
-            <p class="card-text"><small class="text-body-secondary">{{friend.email}}</small></p>
-            <div class=" col">
-              <a  href="{% url 'users:delete_friends' friend.id %}"  class="btn btn-danger">Delete</a>
-            
-          </div>
-          </div>
-  
-          
-        </div>
-       
-      </div>
-    </div>
-    {% endfor %}           
+
+    {% endfor %}
+
+
+
 
 {% endblock %}
