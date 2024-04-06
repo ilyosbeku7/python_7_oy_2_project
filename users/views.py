@@ -106,7 +106,7 @@ def check_parol(user, password):
 class UsersView(LoginRequiredMixin, View):
     def get(self, request):
         users=User.objects.exclude(username=request.user.username)
-        friends_request=FriendsRequest.objects.filter(to_user=request.user)
+        friends_request=User.objects.filter(id__in=FriendsRequest.objects.filter(from_user=request.user).values_list('to_user'))
         return render(request, 'users/users.html', {"users":users, 'friends_request':friends_request})
     
 class AcceptFriendRequestView(LoginRequiredMixin, View):
@@ -138,3 +138,19 @@ class SendFriendRequestView(LoginRequiredMixin, View):
         FriendsRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
 
         return redirect('users:users')
+    
+class IgnoreFriendRequsestView(LoginRequiredMixin, View):
+
+    def get(self, request, id):
+        friends_request=FriendsRequest.objects.get(id=id)
+        friends_request.delete()
+        return redirect('users:networks')
+    
+class DeleteFriendRequsestView(LoginRequiredMixin, View):
+
+    def get(self, request, id):
+        friend=User.objects.get(id=id)
+        user=request.user
+
+        user.friends.remove(friend)
+        return redirect('users:networks')

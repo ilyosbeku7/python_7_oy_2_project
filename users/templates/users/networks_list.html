@@ -2,8 +2,9 @@
 
 
 {% block content %}
-
-{% for network in networks %}
+<h1> My networks</h1>
+{% for friend in networks %}
+  {% if friend not in friend_requests %}
 <div class="card mt-5" style="max-width: 800px; margin-left: 20%; ">
     <div class="row g-0">
       <div class="col-4">
@@ -11,12 +12,12 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">{{network.from_user.name}}</h5>
-          <p class="card-text"><b> {{network.from_user.username}}</b></p>
-          <p class="card-text"><small class="text-body-secondary">{{network.from_user.email}}</small></p>
+          <h5 class="card-title">{{friend.from_user.name}}</h5>
+          <p class="card-text"><b> {{friend.from_user.username}}</b></p>
+          <p class="card-text"><small class="text-body-secondary">{{friend.from_user.email}}</small></p>
           <div class=" col">
-            <a href="{% url 'users:accept_friends' network.id %}"  class="btn btn-primary">Send request</a>
-            <button class="btn btn-secondary">Ignore</button>
+            <a href="{% url 'users:accept_friends' friend.id %}"  class="btn btn-primary"> Accept</a>
+            <a href="{% url 'users:ignore_friend' friend.id %}"  class="btn btn-primary"> Ignore</a>
         </div>
         </div>
 
@@ -25,7 +26,34 @@
      
     </div>
   </div>
+  {% endif %}
   {% endfor %}
 
+  <h1> My friends</h1>
+  {% for friend in user.friends.all %}
+   
+
+  <div class="card mt-5" style="max-width: 800px; margin-left: 20%; ">
+      <div class="row g-0">
+        <div class="col-4">
+          <img style="width: 50%; border-radius: 50%;" src="{{friend.photo.url}}" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{friend.name}}</h5>
+            <p class="card-text"><b> {{friend.username}}</b></p>
+            <p class="card-text"><small class="text-body-secondary">{{friend.email}}</small></p>
+            <div class=" col">
+              <a  href="{% url 'users:delete_friends' friend.id %}"  class="btn btn-danger">Delete</a>
+            
+          </div>
+          </div>
   
+          
+        </div>
+       
+      </div>
+    </div>
+    {% endfor %}           
+
 {% endblock %}
