@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'places',
+    'api',
+    'rest_framework',
     
 ]
 
@@ -113,6 +115,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
 
 AUTH_USER_MODEL='users.User'
 

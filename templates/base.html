@@ -24,7 +24,7 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'places:places_page'%}">Places</a>
               </li>  
              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'users:users'%}">All Users</a>
+                <a class="nav-link active" aria-current="page"{%if user.is_authenticated%} href="{% url 'users:users'%}" {% else %} href="{% url 'users:login_page'%}" {% endif%}>All Users</a>
               </li>  
                <li class="nav-item">
                 <a class="nav-link active" aria-current="page" {%if user.is_authenticated%} href="{% url 'users:networks'%} " {% else %} href="{% url 'users:login_page'%}" {% endif%}>My Networks</a>
