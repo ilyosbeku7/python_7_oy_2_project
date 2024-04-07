@@ -19,11 +19,11 @@ class PlaceApiView(APIView):
 
         return Response(serializer.data)
 
-class PlaceDetailApiView(View):
+class PlaceDetailApiView(APIView):
      def get(self, request, id):
         place =get_object_or_404(Place,id=id)
         serializer = PlaceSerializer(place)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
     
 class ReviewsApiView(APIView):
